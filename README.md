@@ -1,6 +1,6 @@
 # Vagrant Manager for Windows
 
-**--- _This project is no longer under active development_ ---**
+**--- This project is back under active development ---**
 
 Vagrant Manager is a Windows status bar menu app that lets you manage all of your vagrant machines from one central location.
 More information is available at http://vagrantmanager.com/windows
@@ -8,7 +8,8 @@ More information is available at http://vagrantmanager.com/windows
 ![windows_demo.gif](http://vagrantmanager.com/windows_demo.gif)
 
 ## Downloads
-Download Vagrant Manager from the [GitHub Releases Page](https://github.com/lanayotech/vagrant-manager-windows/releases)
+Currently there are no downloads available - but expect that to change in the next month (by around Feb 14, 2016)
+In the meantime the code in the "develop" branch works fine, so feel free to clone that and build.
 
 ## Installation Notes
 * Vagrant Manager can automatically detect most machines, undetected machines will require manual configuration via bookmarks.
