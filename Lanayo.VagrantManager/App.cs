@@ -14,11 +14,13 @@ using Lanayo.Vagrant_Manager.Menu;
 using Lanayo.Vagrant_Manager.Core.Providers;
 using System.IO;
 
-namespace Lanayo.Vagrant_Manager {
+namespace Lanayo.Vagrant_Manager
+{
     public enum VagrantMachineState { UnknownState, NotCreatedState, PowerOffState, SavedState, RunningState, RestoringState }
     public enum PossibleVmStates { running, suspended, off };
 
-    class App : VagrantManagerDelegate, MenuDelegate {
+    class App : VagrantManagerDelegate, MenuDelegate
+    {
         private NativeMenu _NativeMenu;
         private List<TaskOutputWindow> _TaskOutputWindows;
         private bool IsRefreshingVagrantMachines;
@@ -26,16 +28,20 @@ namespace Lanayo.Vagrant_Manager {
         private static App _Instance;
         public Timer RefreshTimer { get; set; }
 
-        public static App Instance {
-            get {
-                if (_Instance == null) {
+        public static App Instance
+        {
+            get
+            {
+                if (_Instance == null)
+                {
                     _Instance = new App();
                 }
                 return _Instance;
             }
         }
 
-        public void Run() {
+        public void Run()
+        {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -57,17 +63,18 @@ namespace Lanayo.Vagrant_Manager {
 
             BookmarkManager.Instance.LoadBookmarks();
 
-            if (Properties.Settings.Default.Guid.Length == 0) {
+            if (Properties.Settings.Default.Guid.Length == 0)
+            {
                 Properties.Settings.Default.Guid = System.Guid.NewGuid().ToString();
                 Properties.Settings.Default.Save();
             }
 
-            Uri appcastUrl = Util.AddQuery(new Uri(Properties.Settings.Default.AppcastUrl), "machineid", Properties.Settings.Default.Guid);
+            /*Uri appcastUrl = Util.AddQuery(new Uri(Properties.Settings.Default.AppcastUrl), "machineid", Properties.Settings.Default.Guid);
             appcastUrl = Util.AddQuery(appcastUrl, "appversion", Application.ProductVersion);
             SharpSparkle.SharpSparkle.SetAppcastUrl(appcastUrl.AbsoluteUri);
             SharpSparkle.SharpSparkle.SetAppDetails(Application.CompanyName, Application.ProductName, Application.ProductVersion);
             SharpSparkle.SharpSparkle.Init();
-            Application.ApplicationExit += Application_ApplicationExit;
+            Application.ApplicationExit += Application_ApplicationExit;*/
 
             var dummy = _NativeMenu.Menu.Handle; // forces handle creation so _NativeMenu.Menu.BeginInvoke can work before the menu was ever clicked
 
@@ -80,37 +87,44 @@ namespace Lanayo.Vagrant_Manager {
             Application.Run();
         }
 
-        void Application_ApplicationExit(object sender, EventArgs e) {
+        /*void Application_ApplicationExit(object sender, EventArgs e) {
             SharpSparkle.SharpSparkle.Cleanup();
-        }
+        }*/
 
         #region Notification handlers
 
-        private void TaskCompleted(Notification notification) {
+        private void TaskCompleted(Notification notification)
+        {
             this.RefreshVagrantMachines();
         }
 
-        private void BookmarksUpdated(Notification notification) {
+        private void BookmarksUpdated(Notification notification)
+        {
             this.RefreshVagrantMachines();
         }
 
-        private void ThemeChanged(Notification notification) {
+        private void ThemeChanged(Notification notification)
+        {
             this.UpdateRunningCount();
         }
 
-        private void ShowRunningVmCountPreferenceChanged(Notification notification) {
+        private void ShowRunningVmCountPreferenceChanged(Notification notification)
+        {
             this.UpdateRunningCount();
         }
 
-        private void UsePathAsInstanceDisplayNamePreferenceChanged(Notification notification) {
+        private void UsePathAsInstanceDisplayNamePreferenceChanged(Notification notification)
+        {
             _NativeMenu.RebuildMenu();
         }
 
-        private void IncludeMachineNamesInMenuPreferenceChanged(Notification notification) {
+        private void IncludeMachineNamesInMenuPreferenceChanged(Notification notification)
+        {
             _NativeMenu.RebuildMenu();
         }
 
-        private void ShowUpdateNotificationPreferenceChanged(Notification notification) {
+        private void ShowUpdateNotificationPreferenceChanged(Notification notification)
+        {
             NotificationCenter.Instance.PostNotification("vagrant-manager.notification-preference-changed", new Notification(null));
         }
 
@@ -118,45 +132,59 @@ namespace Lanayo.Vagrant_Manager {
 
         #region Menu item handlers
 
-        public void PerformVagrantAction(string action, VagrantInstance instance) {
-            if (action == "ssh") {
+        public void PerformVagrantAction(string action, VagrantInstance instance)
+        {
+            if (action == "ssh")
+            {
                 action = String.Format("cd /d {0} && vagrant ssh", Util.EscapeShellArg(instance.Path));
                 this.RunTerminalCommand(action);
-            } else {
+            }
+            else {
                 this.RunVagrantAction(action, instance);
             }
         }
-        public void PerformVagrantAction(string action, VagrantMachine machine) {
-            if (action == "ssh") {
+        public void PerformVagrantAction(string action, VagrantMachine machine)
+        {
+            if (action == "ssh")
+            {
                 action = String.Format("cd /d {0} && vagrant ssh {1}", Util.EscapeShellArg(machine.Instance.Path), machine.Name);
                 this.RunTerminalCommand(action);
-            } else {
+            }
+            else {
                 this.RunVagrantAction(action, machine);
             }
         }
-        public void OpenInstanceInExplorer(VagrantInstance instance) {
-            if (Directory.Exists(instance.Path)) {
+        public void OpenInstanceInExplorer(VagrantInstance instance)
+        {
+            if (Directory.Exists(instance.Path))
+            {
                 Process.Start(@instance.Path);
-            } else {
+            }
+            else {
                 MessageBox.Show("Path not found: " + instance.Path);
             }
         }
-        public void OpenInstanceInTerminal(VagrantInstance instance) {
-            if (Directory.Exists(instance.Path)) {
+        public void OpenInstanceInTerminal(VagrantInstance instance)
+        {
+            if (Directory.Exists(instance.Path))
+            {
                 Process p = new Process();
                 p.StartInfo.FileName = "cmd";
                 p.StartInfo.Arguments = String.Format("/K cd /d {0}", instance.Path);
                 p.Start();
-            } else {
+            }
+            else {
                 MessageBox.Show("Path not found: " + instance.Path);
             }
         }
-        public void AddBookmarkWithInstance(VagrantInstance instance) {
+        public void AddBookmarkWithInstance(VagrantInstance instance)
+        {
             BookmarkManager.Instance.AddBookmarkWithPath(instance.Path, instance.DisplayName, instance.ProviderIdentifier);
             BookmarkManager.Instance.SaveBookmarks();
             NotificationCenter.Instance.PostNotification("vagrant-manager.bookmarks-updated");
         }
-        public void RemoveBookmarkWithInstance(VagrantInstance instance) {
+        public void RemoveBookmarkWithInstance(VagrantInstance instance)
+        {
             BookmarkManager.Instance.RemoveBookmarkWithPath(instance.Path);
             BookmarkManager.Instance.SaveBookmarks();
             NotificationCenter.Instance.PostNotification("vagrant-manager.bookmarks-updated");
@@ -166,22 +194,28 @@ namespace Lanayo.Vagrant_Manager {
 
         #region Vagrant Manager delegates
 
-        public void InstanceAdded(VagrantManager vagrantManager, VagrantInstance instance) {
-            _NativeMenu.Menu.BeginInvoke((MethodInvoker) delegate {
+        public void InstanceAdded(VagrantManager vagrantManager, VagrantInstance instance)
+        {
+            _NativeMenu.Menu.BeginInvoke((MethodInvoker)delegate
+            {
                 Dictionary<string, object> userInfo = new Dictionary<string, object>();
                 userInfo["instance"] = instance;
                 NotificationCenter.Instance.PostNotification("vagrant-manager.instance-added", new Notification(null, userInfo));
             });
         }
-        public void InstanceRemoved(VagrantManager vagrantManager, VagrantInstance instance) {
-            _NativeMenu.Menu.BeginInvoke((MethodInvoker)delegate {
+        public void InstanceRemoved(VagrantManager vagrantManager, VagrantInstance instance)
+        {
+            _NativeMenu.Menu.BeginInvoke((MethodInvoker)delegate
+            {
                 Dictionary<string, object> userInfo = new Dictionary<string, object>();
                 userInfo["instance"] = instance;
                 NotificationCenter.Instance.PostNotification("vagrant-manager.instance-removed", new Notification(null, userInfo));
             });
         }
-        public void InstanceUpdated(VagrantManager vagrantManager, VagrantInstance oldInstance, VagrantInstance newInstance) {
-            _NativeMenu.Menu.BeginInvoke((MethodInvoker)delegate {
+        public void InstanceUpdated(VagrantManager vagrantManager, VagrantInstance oldInstance, VagrantInstance newInstance)
+        {
+            _NativeMenu.Menu.BeginInvoke((MethodInvoker)delegate
+            {
                 Dictionary<string, object> userInfo = new Dictionary<string, object>();
                 userInfo["old_instance"] = oldInstance;
                 userInfo["new_instance"] = newInstance;
@@ -193,45 +227,64 @@ namespace Lanayo.Vagrant_Manager {
 
         #region Vagrant Machine control
 
-        public void RefreshVagrantMachines() {
-            if (!IsRefreshingVagrantMachines) {
+        public void RefreshVagrantMachines()
+        {
+            if (!IsRefreshingVagrantMachines)
+            {
                 IsRefreshingVagrantMachines = true;
                 NotificationCenter.Instance.PostNotification("vagrant-manager.refreshing-started");
-                Task.Run(() => {
+                Task.Run(() =>
+                {
                     VagrantManager.Instance.RefreshInstances();
 
-                    _NativeMenu.Menu.BeginInvoke((MethodInvoker)delegate {
+                    _NativeMenu.Menu.BeginInvoke((MethodInvoker)delegate
+                    {
                         IsRefreshingVagrantMachines = false;
                         NotificationCenter.Instance.PostNotification("vagrant-manager.refreshing-ended");
                         this.UpdateRunningCount();
 
-                        if (QueuedRefreshes > 0) {
+                        if (QueuedRefreshes > 0)
+                        {
                             --QueuedRefreshes;
                             this.RefreshVagrantMachines();
                         }
                     });
                 });
-            } else {
+            }
+            else {
                 ++QueuedRefreshes;
             }
         }
 
-        private void RunVagrantAction(string action, VagrantMachine machine) {
+        private void RunVagrantAction(string action, VagrantMachine machine)
+        {
             string command;
 
-            if (action == "up") {
+            if (action == "up")
+            {
                 command = String.Format("vagrant up{0}", !String.IsNullOrEmpty(machine.Instance.ProviderIdentifier) ? String.Format(" --provider={0}", machine.Instance.ProviderIdentifier) : "virtualbox");
-            } else if (action == "reload") {
+            }
+            else if (action == "reload")
+            {
                 command = "vagrant reload";
-            } else if (action == "suspend") {
+            }
+            else if (action == "suspend")
+            {
                 command = "vagrant suspend";
-            } else if (action == "halt") {
+            }
+            else if (action == "halt")
+            {
                 command = "vagrant halt";
-            } else if (action == "provision") {
+            }
+            else if (action == "provision")
+            {
                 command = "vagrant provision";
-            } else if (action == "destroy") {
+            }
+            else if (action == "destroy")
+            {
                 command = "vagrant destroy -f";
-            } else {
+            }
+            else {
                 return;
             }
 
@@ -254,22 +307,35 @@ namespace Lanayo.Vagrant_Manager {
             _TaskOutputWindows.Add(outputWindow);
         }
 
-        private void RunVagrantAction(string action, VagrantInstance instance) {
+        private void RunVagrantAction(string action, VagrantInstance instance)
+        {
             string command;
 
-            if (action == "up") {
+            if (action == "up")
+            {
                 command = String.Format("vagrant up{0}", !String.IsNullOrEmpty(instance.ProviderIdentifier) ? String.Format(" --provider={0}", instance.ProviderIdentifier) : "virtualbox");
-            } else if (action == "reload") {
+            }
+            else if (action == "reload")
+            {
                 command = "vagrant reload";
-            } else if (action == "suspend") {
+            }
+            else if (action == "suspend")
+            {
                 command = "vagrant suspend";
-            } else if (action == "halt") {
+            }
+            else if (action == "halt")
+            {
                 command = "vagrant halt";
-            } else if (action == "provision") {
+            }
+            else if (action == "provision")
+            {
                 command = "vagrant provision";
-            } else if (action == "destroy") {
+            }
+            else if (action == "destroy")
+            {
                 command = "vagrant destroy -f";
-            } else {
+            }
+            else {
                 return;
             }
 
@@ -292,7 +358,8 @@ namespace Lanayo.Vagrant_Manager {
             _TaskOutputWindows.Add(outputWindow);
         }
 
-        private void RunTerminalCommand(string command) {
+        private void RunTerminalCommand(string command)
+        {
             Process p = new Process();
             p.StartInfo.FileName = "cmd";
             p.StartInfo.Arguments = String.Format("/C {0}", command);
@@ -303,23 +370,28 @@ namespace Lanayo.Vagrant_Manager {
 
         #region Window management
 
-        private void RemoveTaskOutputWindow(TaskOutputWindow taskOutputWindow) {
+        private void RemoveTaskOutputWindow(TaskOutputWindow taskOutputWindow)
+        {
             _TaskOutputWindows.Remove(taskOutputWindow);
         }
 
-        public void UpdateRunningCount() {
+        public void UpdateRunningCount()
+        {
             Dictionary<string, object> userInfo = new Dictionary<string, object>();
             userInfo["count"] = VagrantManager.Instance.GetRunningVmCount();
             NotificationCenter.Instance.PostNotification("vagrant-manager.update-running-vm-count", new Notification(null, userInfo));
         }
 
-        public void RefreshTimerState() {
-            if (RefreshTimer != null) {
+        public void RefreshTimerState()
+        {
+            if (RefreshTimer != null)
+            {
                 RefreshTimer.Stop();
                 RefreshTimer = null;
             }
 
-            if (Properties.Settings.Default.RefreshEvery) {
+            if (Properties.Settings.Default.RefreshEvery)
+            {
                 RefreshTimer = new Timer();
                 RefreshTimer.Interval = Properties.Settings.Default.RefreshEveryInterval * 1000;
                 RefreshTimer.Tick += (s, args) => { this.RefreshVagrantMachines(); };
@@ -327,15 +399,18 @@ namespace Lanayo.Vagrant_Manager {
             }
         }
 
-        public void VerifyVBoxManagePath() {
-            if (!File.Exists(Properties.Settings.Default.VBoxManagePath) && !Properties.Settings.Default.VBoxManagePathPrompted) {
+        public void VerifyVBoxManagePath()
+        {
+            if (!File.Exists(Properties.Settings.Default.VBoxManagePath) && !Properties.Settings.Default.VBoxManagePathPrompted)
+            {
 
                 MessageBox.Show("VBoxManage.exe not found at default location", "Vagrant Manager - Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 OpenFileDialog dialog = new OpenFileDialog();
                 dialog.Title = "Select VBoxManage.exe";
                 dialog.Filter = "VBoxManage|VBoxManage.exe";
-                if (dialog.ShowDialog() == DialogResult.OK) {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
                     DirectoryInfo info = new DirectoryInfo(dialog.FileName);
                     Properties.Settings.Default.VBoxManagePath = info.FullName;
                     Properties.Settings.Default.Save();
