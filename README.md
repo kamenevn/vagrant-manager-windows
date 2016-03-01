@@ -6,9 +6,6 @@ Vagrant Manager is a Windows status bar menu app that lets you manage all of you
 
 ![Vagrant Manager in actiont](http://hassanally.net/vagrant-manager/windows/vagrant-manager-windows.gif "Vagrant Manager")
 
-## Downloads
-A ClickOnce installer is available at http://hassanally.net/vagrant-manager/windows/ - you can always clone the repo and build/install yourself.
-
 ## Installation Notes
 * Vagrant Manager can automatically detect most machines, undetected machines will require manual configuration via bookmarks.
 * Make sure that you have Vagrant installed, and the `vagrant` command is in your path so that Vagrant Manager can execute it
