@@ -136,7 +136,11 @@ namespace Lanayo.Vagrant_Manager
         {
             if (action == "ssh")
             {
-                action = String.Format("cd /d {0} && vagrant ssh", Util.EscapeShellArg(instance.Path));
+                action = String.Format("/C cd /d {0} && vagrant ssh", Util.EscapeShellArg(instance.Path));
+                if (Properties.Settings.Default.TerminalProgram == "ConEmu64")
+                {
+                    action = String.Format("-dir {0} -cmd \"vagrant ssh\"", Util.EscapeShellArg(instance.Path));
+                }
                 this.RunTerminalCommand(action);
             }
             else {
@@ -147,7 +151,11 @@ namespace Lanayo.Vagrant_Manager
         {
             if (action == "ssh")
             {
-                action = String.Format("cd /d {0} && vagrant ssh {1}", Util.EscapeShellArg(machine.Instance.Path), machine.Name);
+                action = String.Format("/C cd /d {0} && vagrant ssh {1}", Util.EscapeShellArg(machine.Instance.Path), machine.Name);
+                if (Properties.Settings.Default.TerminalProgram == "ConEmu64")
+                {
+                    action = String.Format("-dir {0} -cmd \"vagrant ssh {1}\"", Util.EscapeShellArg(machine.Instance.Path), machine.Name);
+                }
                 this.RunTerminalCommand(action);
             }
             else {
@@ -166,11 +174,17 @@ namespace Lanayo.Vagrant_Manager
         }
         public void OpenInstanceInTerminal(VagrantInstance instance)
         {
+            string terminal_arguments = "/K cd /d {0}";
+            if (Properties.Settings.Default.TerminalProgram == "ConEmu64")
+            {
+                terminal_arguments = "-dir {0}";
+            }
+
             if (Directory.Exists(instance.Path))
             {
                 Process p = new Process();
-                p.StartInfo.FileName = "cmd";
-                p.StartInfo.Arguments = String.Format("/K cd /d {0}", instance.Path);
+                p.StartInfo.FileName = Properties.Settings.Default.TerminalProgram;
+                p.StartInfo.Arguments = String.Format(terminal_arguments, instance.Path);
                 p.Start();
             }
             else {
@@ -280,22 +294,22 @@ namespace Lanayo.Vagrant_Manager
             {
                 command = "vagrant provision";
             }
-            else if (action == "destroy")
-            {
-                command = "vagrant destroy -f";
-            }
             else {
                 return;
             }
 
             Process process = new Process();
-            process.StartInfo.FileName = "cmd";
+            process.StartInfo.FileName = Properties.Settings.Default.TerminalProgram;
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.RedirectStandardError = true;
             process.StartInfo.Arguments = String.Format("/C cd /d {0} && {1} {2}", Util.EscapeShellArg(machine.Instance.Path), command, Util.EscapeShellArg(machine.Name));
+            if (Properties.Settings.Default.TerminalProgram == "ConEmu64")
+            {
+                process.StartInfo.Arguments = String.Format("-dir {0} -cmd \"{1} {2}\"", Util.EscapeShellArg(machine.Instance.Path), command, Util.EscapeShellArg(machine.Name));
+            }
 
             TaskOutputWindow outputWindow = new TaskOutputWindow();
             outputWindow.Task = process;
@@ -331,22 +345,22 @@ namespace Lanayo.Vagrant_Manager
             {
                 command = "vagrant provision";
             }
-            else if (action == "destroy")
-            {
-                command = "vagrant destroy -f";
-            }
             else {
                 return;
             }
 
             Process process = new Process();
-            process.StartInfo.FileName = "cmd";
+            process.StartInfo.FileName = Properties.Settings.Default.TerminalProgram;
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.RedirectStandardError = true;
             process.StartInfo.Arguments = String.Format("/C cd /d {0} && {1}", Util.EscapeShellArg(instance.Path), command);
+
+            if (Properties.Settings.Default.TerminalProgram == "ConEmu64") {
+                process.StartInfo.Arguments = String.Format("-dir {0} -cmd \"{1}\"", Util.EscapeShellArg(instance.Path), command);
+            }
 
             TaskOutputWindow outputWindow = new TaskOutputWindow();
             outputWindow.Task = process;
@@ -361,8 +375,8 @@ namespace Lanayo.Vagrant_Manager
         private void RunTerminalCommand(string command)
         {
             Process p = new Process();
-            p.StartInfo.FileName = "cmd";
-            p.StartInfo.Arguments = String.Format("/C {0}", command);
+            p.StartInfo.FileName = Properties.Settings.Default.TerminalProgram;
+            p.StartInfo.Arguments = String.Format("{0}", command);
             p.Start();
         }
 
