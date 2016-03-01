@@ -9,11 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+//using System.Diagnostics;
 
 namespace Lanayo.Vagrant_Manager.Windows {
     public partial class PreferencesWindow : Form {
 
         private ComboBoxItem[] RefreshItems;
+        private ComboBoxItemString[] TerminalProgramItems;
 
         public PreferencesWindow() {
             InitializeComponent();
@@ -30,13 +32,21 @@ namespace Lanayo.Vagrant_Manager.Windows {
                 new ComboBoxItem() { Text = "1 hour", Value = 3600 }
             };
 
+            TerminalProgramItems = new ComboBoxItemString[] {
+                new ComboBoxItemString() { Text = "cmd", Value = "cmd" },
+                //new ComboBoxItemString() { Text = "PowerShell", Value = "powerShell" },
+                new ComboBoxItemString() { Text = "ConEmu64", Value = "C:\\Program Files\\ConEmu\\ConEmu64.exe" }
+            };
+
             RefreshEveryComboBox.Items.AddRange(RefreshItems);
+            SelectTerminalProgramComboBox.Items.AddRange(TerminalProgramItems);
 
             LaunchAtLoginCheckBox.Checked = Properties.Settings.Default.LaunchAtLogin;
             UpdateNotificationCheckBox.Checked = Properties.Settings.Default.ShowUpdateNotification;
             InstancePathAsDisplayCheckBox.Checked = Properties.Settings.Default.UsePathAsInstanceDisplayName;
             IncludeMachineNamesCheckBox.Checked = Properties.Settings.Default.IncludeMachineNamesInMenu;
             AutoCloseTaskWindowCheckBox.Checked = Properties.Settings.Default.AutoCloseTaskWindows;
+            SelectTerminalProgramComboBox.Text = Properties.Settings.Default.TerminalProgram;
             RefreshEveryComboBox.Text = Properties.Settings.Default.RefreshEveryInterval > 0 ? RefreshItems.First(item => item.Value == Properties.Settings.Default.RefreshEveryInterval).Text : RefreshItems[4].Text;
             RefreshEveryCheckBox.Checked = Properties.Settings.Default.RefreshEvery;
             VirtualBoxPathTextBox.Text = Properties.Settings.Default.VBoxManagePath;
@@ -112,6 +122,23 @@ namespace Lanayo.Vagrant_Manager.Windows {
             Properties.Settings.Default.Save();
 
             App.Instance.RefreshTimerState();
+        }
+
+        private void SelectTerminalProgramComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.TerminalProgram = TerminalProgramItems.First(item => item.Text == SelectTerminalProgramComboBox.Text).Value;
+            Properties.Settings.Default.Save();
+
+            /*
+            ** тут проверку можно вернуть если использовать пути к файлам
+            if (File.Exists(TerminalProgramItems.First(item => item.Text == SelectTerminalProgramComboBox.Text).Value))
+            {}
+            else {
+                MessageBox.Show(TerminalProgramItems.First(item => item.Text == SelectTerminalProgramComboBox.Text).Value + " - not found");
+                Properties.Settings.Default.TerminalProgram = "cmd";
+                Properties.Settings.Default.Save();
+            }
+            */
         }
 
         private void VirtualBoxBrowseButton_Click(object sender, EventArgs e) {

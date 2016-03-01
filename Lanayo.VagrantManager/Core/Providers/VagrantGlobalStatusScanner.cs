@@ -13,10 +13,12 @@ namespace Lanayo.Vagrant_Manager.Core.Providers {
         public string[] GetInstancePaths() {
             List<string> paths = new List<string>();
 
+            string terminal_arguments = "/C vagrant global-status";
+
             Process p = new Process {
                 StartInfo = new ProcessStartInfo {
                     FileName = "cmd",
-                    Arguments = "/C vagrant global-status",
+                    Arguments = terminal_arguments,
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     WindowStyle = ProcessWindowStyle.Hidden,

@@ -63,12 +63,12 @@ namespace Lanayo.Vagrant_Manager.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap destroy {
-            get {
-                object obj = ResourceManager.GetObject("destroy", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
+       // internal static System.Drawing.Bitmap destroy {
+       //     get {
+       //         object obj = ResourceManager.GetObject("destroy", resourceCulture);
+       //         return ((System.Drawing.Bitmap)(obj));
+       //     }
+       // }
         
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
@@ -93,12 +93,12 @@ namespace Lanayo.Vagrant_Manager.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap provision {
-            get {
-                object obj = ResourceManager.GetObject("provision", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
+        //internal static System.Drawing.Bitmap provision {
+        //    get {
+        //        object obj = ResourceManager.GetObject("provision", resourceCulture);
+        //        return ((System.Drawing.Bitmap)(obj));
+        //    }
+        //}
         
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
