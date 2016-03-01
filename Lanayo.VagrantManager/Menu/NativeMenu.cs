@@ -81,8 +81,8 @@ namespace Lanayo.Vagrant_Manager.Menu
                 new ToolStripMenuItem("Reload", Resources.reload, AllReloadMenuItem_Click),
                 new ToolStripMenuItem("Suspend", Resources.suspend, AllSuspendMenuItem_Click ),
                 new ToolStripMenuItem("Halt", Resources.halt, AllHaltMenuItem_Click),
-                new ToolStripMenuItem("Provision", Resources.provision, AllProvisionMenuItem_Click),
-                new ToolStripMenuItem("Destroy", Resources.destroy, AllDestroyMenuitem_Click)
+                //new ToolStripMenuItem("Provision", Resources.provision, AllProvisionMenuItem_Click),
+                //new ToolStripMenuItem("Destroy", Resources.destroy, AllDestroyMenuitem_Click)
             });
             _Menu.Items.Add(allMachinesMenuItem);
             _Menu.Items.Add(Util.MakeBlankToolstripMenuItem("Manage Bookmarks", ManageBookmarksMenuItem_Click));
@@ -304,18 +304,18 @@ namespace Lanayo.Vagrant_Manager.Menu
         {
             this.PerformAction("halt", menuItem.Instance);
         }
-        public void NativeMenuItemDestroyAllMachines(NativeMenuItem menuItem)
-        {
-            DialogResult dialogResult = MessageBox.Show(String.Format("Are you sure you want to destroy {0}?", menuItem.Instance.Machines.Length > 1 ? "all machines in the group" : "this machine"), "Confirm Destructive Action", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                this.PerformAction("destroy", menuItem.Instance);
-            }
-        }
-        public void NativeMenuItemProvisionAllMachines(NativeMenuItem menuItem)
-        {
-            this.PerformAction("provision", menuItem.Instance);
-        }
+        //public void NativeMenuItemDestroyAllMachines(NativeMenuItem menuItem)
+        //{
+        //    DialogResult dialogResult = MessageBox.Show(String.Format("Are you sure you want to destroy {0}?", menuItem.Instance.Machines.Length > 1 ? "all machines in the group" : "this machine"), "Confirm Destructive Action", MessageBoxButtons.YesNo);
+        //    if (dialogResult == DialogResult.Yes)
+        //    {
+        //        this.PerformAction("destroy", menuItem.Instance);
+        //    }
+        //}
+        //public void NativeMenuItemProvisionAllMachines(NativeMenuItem menuItem)
+        //{
+        //    this.PerformAction("provision", menuItem.Instance);
+        //}
         public void NativeMenuItemOpenExplorer(NativeMenuItem menuItem)
         {
             Delegate.OpenInstanceInExplorer(menuItem.Instance);
@@ -366,18 +366,19 @@ namespace Lanayo.Vagrant_Manager.Menu
         {
             this.PerformAction("halt", machine);
         }
-        public void NativeMenuItemDestroyMachine(VagrantMachine machine)
-        {
-            DialogResult dialogResult = MessageBox.Show("Are you sure you want to destroy this machine?", "Confirm Destructive Action", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                this.PerformAction("destroy", machine);
-            }
-        }
-        public void NativeMenuItemProvisionMachine(VagrantMachine machine)
-        {
-            this.PerformAction("provision", machine);
-        }
+
+        //public void NativeMenuItemDestroyMachine(VagrantMachine machine)
+        //{
+        //    DialogResult dialogResult = MessageBox.Show("Are you sure you want to destroy this machine?", "Confirm Destructive Action", MessageBoxButtons.YesNo);
+        //    if (dialogResult == DialogResult.Yes)
+        //    {
+        //        this.PerformAction("destroy", machine);
+        //    }
+        //}
+        //public void NativeMenuItemProvisionMachine(VagrantMachine machine)
+        //{
+        //    this.PerformAction("provision", machine);
+        //}
 
         #endregion
 
@@ -439,31 +440,31 @@ namespace Lanayo.Vagrant_Manager.Menu
             });
         }
 
-        private void AllProvisionMenuItem_Click(object sender, EventArgs e)
-        {
-            VagrantManager.Instance.Instances.ToList().ForEach(instance =>
-            {
-                instance.Machines.ToList().ForEach(machine =>
-                {
-                    this.PerformAction("provision", machine);
-                });
-            });
-        }
+        //private void AllProvisionMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    VagrantManager.Instance.Instances.ToList().ForEach(instance =>
+        //    {
+        //        instance.Machines.ToList().ForEach(machine =>
+        //        {
+        //            this.PerformAction("provision", machine);
+        //        });
+        //    });
+        //}
 
-        private void AllDestroyMenuitem_Click(object sender, EventArgs e)
-        {
-            DialogResult dialogResult = MessageBox.Show("Are you sure?", "Delete Confirmation", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                VagrantManager.Instance.Instances.ToList().ForEach(instance =>
-                {
-                    instance.Machines.ToList().ForEach(machine =>
-                    {
-                        this.PerformAction("destroy", machine);
-                    });
-                });
-            }
-        }
+        //private void AllDestroyMenuitem_Click(object sender, EventArgs e)
+        //{
+        //    DialogResult dialogResult = MessageBox.Show("Are you sure?", "Delete Confirmation", MessageBoxButtons.YesNo);
+        //    if (dialogResult == DialogResult.Yes)
+        //    {
+        //        VagrantManager.Instance.Instances.ToList().ForEach(instance =>
+        //        {
+        //            instance.Machines.ToList().ForEach(machine =>
+        //            {
+        //                this.PerformAction("destroy", machine);
+        //            });
+        //        });
+        //    }
+        //}
 
         #endregion
 

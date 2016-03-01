@@ -13,8 +13,8 @@ namespace Lanayo.Vagrant_Manager.Menu {
         void NativeMenuItemSuspendAllMachines(NativeMenuItem menuItem);
         void NativeMenuItemReloadAllMachines(NativeMenuItem menuItem);
         void NativeMenuItemHaltAllMachines(NativeMenuItem menuItem);
-        void NativeMenuItemDestroyAllMachines(NativeMenuItem menuItem);
-        void NativeMenuItemProvisionAllMachines(NativeMenuItem menuItem);
+        //void NativeMenuItemDestroyAllMachines(NativeMenuItem menuItem);
+        //void NativeMenuItemProvisionAllMachines(NativeMenuItem menuItem);
         void NativeMenuItemOpenExplorer(NativeMenuItem menuItem);
         void NativeMenuItemOpenTerminal(NativeMenuItem menuItem);
         void NativeMenuItemUpdateProviderIdentifier(NativeMenuItem menuItem, string providerIdentifier);
@@ -26,8 +26,8 @@ namespace Lanayo.Vagrant_Manager.Menu {
         void NativeMenuItemSuspendMachine(VagrantMachine machine);
         void NativeMenuItemReloadMachine(VagrantMachine machine);
         void NativeMenuItemHaltMachine(VagrantMachine machine);
-        void NativeMenuItemDestroyMachine(VagrantMachine machine);
-        void NativeMenuItemProvisionMachine(VagrantMachine machine);
+        //void NativeMenuItemDestroyMachine(VagrantMachine machine);
+        //void NativeMenuItemProvisionMachine(VagrantMachine machine);
 
     }
 }

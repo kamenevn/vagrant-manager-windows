@@ -33,6 +33,8 @@
             this.InstancePathAsDisplayLabel = new System.Windows.Forms.Label();
             this.RefreshEveryComboBox = new System.Windows.Forms.ComboBox();
             this.RefreshEveryCheckBox = new System.Windows.Forms.CheckBox();
+            this.SelectTerminalProgramComboBox = new System.Windows.Forms.ComboBox();
+            this.SelectTerminalProgramLabel = new System.Windows.Forms.Label();
             this.AutoCloseTaskWindowCheckBox = new System.Windows.Forms.CheckBox();
             this.IncludeMachineNamesCheckBox = new System.Windows.Forms.CheckBox();
             this.InstancePathAsDisplayCheckBox = new System.Windows.Forms.CheckBox();
@@ -58,6 +60,8 @@
             this.PreferencesPanel.Controls.Add(this.InstancePathAsDisplayLabel);
             this.PreferencesPanel.Controls.Add(this.RefreshEveryComboBox);
             this.PreferencesPanel.Controls.Add(this.RefreshEveryCheckBox);
+            this.PreferencesPanel.Controls.Add(this.SelectTerminalProgramComboBox);
+            this.PreferencesPanel.Controls.Add(this.SelectTerminalProgramLabel);
             this.PreferencesPanel.Controls.Add(this.AutoCloseTaskWindowCheckBox);
             this.PreferencesPanel.Controls.Add(this.IncludeMachineNamesCheckBox);
             this.PreferencesPanel.Controls.Add(this.InstancePathAsDisplayCheckBox);
@@ -65,7 +69,7 @@
             this.PreferencesPanel.Controls.Add(this.LaunchAtLoginCheckBox);
             this.PreferencesPanel.Location = new System.Drawing.Point(12, 12);
             this.PreferencesPanel.Name = "PreferencesPanel";
-            this.PreferencesPanel.Size = new System.Drawing.Size(250, 356);
+            this.PreferencesPanel.Size = new System.Drawing.Size(250, 400);
             this.PreferencesPanel.TabIndex = 0;
             // 
             // label1
@@ -152,6 +156,28 @@
             this.RefreshEveryCheckBox.Text = "Refresh Every";
             this.RefreshEveryCheckBox.UseVisualStyleBackColor = true;
             this.RefreshEveryCheckBox.CheckedChanged += new System.EventHandler(this.RefreshEveryCheckBox_CheckedChanged);
+            // 
+            // SelectTerminalProgramLabel
+            // 
+            this.SelectTerminalProgramLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.SelectTerminalProgramLabel.AutoSize = true;
+            this.SelectTerminalProgramLabel.Location = new System.Drawing.Point(31, 324);
+            this.SelectTerminalProgramLabel.Name = "SelectTerminalProgramLabel";
+            this.SelectTerminalProgramLabel.Size = new System.Drawing.Size(99, 17);
+            this.SelectTerminalProgramLabel.TabIndex = 2;
+            this.SelectTerminalProgramLabel.Text = "Terminal Program";
+            
+            // 
+            // SelectTerminalProgramComboBox
+            // 
+            this.SelectTerminalProgramComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.SelectTerminalProgramComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SelectTerminalProgramComboBox.FormattingEnabled = true;
+            this.SelectTerminalProgramComboBox.Location = new System.Drawing.Point(34, 342);
+            this.SelectTerminalProgramComboBox.Name = "SelectTerminalProgramComboBox";
+            this.SelectTerminalProgramComboBox.Size = new System.Drawing.Size(186, 21);
+            this.SelectTerminalProgramComboBox.TabIndex = 9;
+            this.SelectTerminalProgramComboBox.SelectedIndexChanged += new System.EventHandler(this.SelectTerminalProgramComboBox_SelectedIndexChanged);
             // 
             // AutoCloseTaskWindowCheckBox
             // 
@@ -264,6 +290,8 @@
         private System.Windows.Forms.CheckBox IncludeMachineNamesCheckBox;
         private System.Windows.Forms.CheckBox RefreshEveryCheckBox;
         private System.Windows.Forms.ComboBox RefreshEveryComboBox;
+        private System.Windows.Forms.ComboBox SelectTerminalProgramComboBox;
+        private System.Windows.Forms.Label SelectTerminalProgramLabel;
         private System.Windows.Forms.Label InstancePathAsDisplayLabel;
         private System.Windows.Forms.Label IncludeMachineNamesLabel;
         private System.Windows.Forms.Label AutoCloseTaskWindowLabel;

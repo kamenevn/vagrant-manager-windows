@@ -62,13 +62,15 @@ namespace Lanayo.Vagrant_Manager.Core.Vagrant {
         public void QueryMachines() {
             List<VagrantMachine> machines = new List<VagrantMachine>();
 
+            string terminal_arguments = "/C cd /d {0} && vagrant status";
+
             if (this.HasVagrantFile()) {
                 Process p = new Process {
                     StartInfo = new ProcessStartInfo {
                         FileName = "cmd",
                         WindowStyle = ProcessWindowStyle.Hidden,
                         CreateNoWindow = true,
-                        Arguments = String.Format("/C cd /d {0} && vagrant status", Util.EscapeShellArg(_Path)),
+                        Arguments = String.Format(terminal_arguments, Util.EscapeShellArg(_Path)),
                         UseShellExecute = false,
                         RedirectStandardOutput = true,
                     }

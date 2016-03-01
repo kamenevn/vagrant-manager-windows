@@ -20,8 +20,8 @@ namespace Lanayo.Vagrant_Manager.Menu {
         private ToolStripMenuItem _InstanceReloadMenuItem;
         private ToolStripMenuItem _InstanceSuspendMenuItem;
         private ToolStripMenuItem _InstanceHaltMenuItem;
-        private ToolStripMenuItem _InstanceDestroyMenuItem;
-        private ToolStripMenuItem _InstanceProvisionMenuItem;
+        //private ToolStripMenuItem _InstanceDestroyMenuItem;
+        //private ToolStripMenuItem _InstanceProvisionMenuItem;
 
         private ToolStripMenuItem _OpenInExplorerMenuItem;
         private ToolStripMenuItem _OpenInTerminalMenuItem;
@@ -67,15 +67,15 @@ namespace Lanayo.Vagrant_Manager.Menu {
                     MenuItem.DropDownItems.Add(_InstanceHaltMenuItem);
                 }
 
-                if (_InstanceDestroyMenuItem == null) {
-                    _InstanceDestroyMenuItem = new ToolStripMenuItem(Instance.Machines.Length > 1 ? "Destroy All" : "Destroy", Resources.destroy, DestroyAllMachines_Click);
-                    MenuItem.DropDownItems.Add(_InstanceDestroyMenuItem);
-                }
+                //if (_InstanceDestroyMenuItem == null) {
+                //    _InstanceDestroyMenuItem = new ToolStripMenuItem(Instance.Machines.Length > 1 ? "Destroy All" : "Destroy", Resources.destroy, DestroyAllMachines_Click);
+                //    MenuItem.DropDownItems.Add(_InstanceDestroyMenuItem);
+                //}
 
-                if (_InstanceProvisionMenuItem == null) {
-                    _InstanceProvisionMenuItem = new ToolStripMenuItem(Instance.Machines.Length > 1 ? "Provision All" : "Provision", Resources.provision, ProvisionAllMachines_Click);
-                    MenuItem.DropDownItems.Add(_InstanceProvisionMenuItem);
-                }
+                //if (_InstanceProvisionMenuItem == null) {
+                //    _InstanceProvisionMenuItem = new ToolStripMenuItem(Instance.Machines.Length > 1 ? "Provision All" : "Provision", Resources.provision, ProvisionAllMachines_Click);
+                //    MenuItem.DropDownItems.Add(_InstanceProvisionMenuItem);
+                //}
 
                 if (_ActionSeparator == null) {
                     _ActionSeparator = new ToolStripSeparator();
@@ -132,7 +132,7 @@ namespace Lanayo.Vagrant_Manager.Menu {
                         _InstanceReloadMenuItem.Visible = false;
                         _InstanceSuspendMenuItem.Visible = false;
                         _InstanceHaltMenuItem.Visible = false;
-                        _InstanceProvisionMenuItem.Visible = false;
+                        //_InstanceProvisionMenuItem.Visible = false;
                     }
 
                     if (runningCount > 0) {
@@ -141,7 +141,7 @@ namespace Lanayo.Vagrant_Manager.Menu {
                         _InstanceReloadMenuItem.Visible = true;
                         _InstanceSuspendMenuItem.Visible = true;
                         _InstanceHaltMenuItem.Visible = true;
-                        _InstanceProvisionMenuItem.Visible = true;
+                        //_InstanceProvisionMenuItem.Visible = true;
                     }
 
                     if (Instance.Machines.Count() > 1) {
@@ -200,17 +200,17 @@ namespace Lanayo.Vagrant_Manager.Menu {
                         ToolStripMenuItem machineReloadMenuItem = new ToolStripMenuItem("Reload", Resources.reload, ReloadMachine_Click) { Tag = machine };
                         ToolStripMenuItem machineSuspendMenuItem = new ToolStripMenuItem("Suspend", Resources.suspend, SuspendMachine_Click) { Tag = machine };
                         ToolStripMenuItem machineHaltMenuItem = new ToolStripMenuItem("Halt", Resources.halt, HaltMachine_Click) { Tag = machine };
-                        ToolStripMenuItem machineDestroyMenuItem = new ToolStripMenuItem("Destroy", Resources.destroy, DestroyMachine_Click) { Tag = machine };
-                        ToolStripMenuItem machineProvisionMenuItem = new ToolStripMenuItem("Provision", Resources.provision, ProvisionMachine_Click) { Tag = machine };
+                        //ToolStripMenuItem machineDestroyMenuItem = new ToolStripMenuItem("Destroy", Resources.destroy, DestroyMachine_Click) { Tag = machine };
+                        //ToolStripMenuItem machineProvisionMenuItem = new ToolStripMenuItem("Provision", Resources.provision, ProvisionMachine_Click) { Tag = machine };
 
                         machineItem.DropDownItems.AddRange(new ToolStripMenuItem[] {
                             machineUpMenuItem,
                             machineSSHMenuItem,
                             machineReloadMenuItem,
                             machineSuspendMenuItem,
-                            machineHaltMenuItem,
-                            machineDestroyMenuItem,
-                            machineProvisionMenuItem
+                            machineHaltMenuItem
+                            //machineDestroyMenuItem,
+                            //machineProvisionMenuItem
                         });
 
                         _MachineMenuItems.Add(machineItem);
@@ -224,14 +224,14 @@ namespace Lanayo.Vagrant_Manager.Menu {
                             machineReloadMenuItem.Visible = true;
                             machineSuspendMenuItem.Visible = true;
                             machineHaltMenuItem.Visible = true;
-                            machineProvisionMenuItem.Visible = true;
+                            //machineProvisionMenuItem.Visible = true;
                         } else {
                             machineUpMenuItem.Visible = true;
                             machineSSHMenuItem.Visible = false;
                             machineReloadMenuItem.Visible = false;
                             machineSuspendMenuItem.Visible = false;
                             machineHaltMenuItem.Visible = false;
-                            machineProvisionMenuItem.Visible = false;
+                            //machineProvisionMenuItem.Visible = false;
                         }
                     });
                 } else {
@@ -262,13 +262,13 @@ namespace Lanayo.Vagrant_Manager.Menu {
             Delegate.NativeMenuItemHaltAllMachines(this);
         }
 
-        public void DestroyAllMachines_Click(object sender, EventArgs e) {
-            Delegate.NativeMenuItemDestroyAllMachines(this);
-        }
+        //public void DestroyAllMachines_Click(object sender, EventArgs e) {
+        //    Delegate.NativeMenuItemDestroyAllMachines(this);
+        //}
 
-        public void ProvisionAllMachines_Click(object sender, EventArgs e) {
-            Delegate.NativeMenuItemProvisionAllMachines(this);
-        }
+        //public void ProvisionAllMachines_Click(object sender, EventArgs e) {
+        //    Delegate.NativeMenuItemProvisionAllMachines(this);
+        //}
 
         public void OpenInExplorerMenuItem_Click(object sender, EventArgs e) {
             Delegate.NativeMenuItemOpenExplorer(this);
@@ -314,12 +314,12 @@ namespace Lanayo.Vagrant_Manager.Menu {
             Delegate.NativeMenuItemHaltMachine((VagrantMachine)((ToolStripMenuItem)sender).Tag);
         }
 
-        public void DestroyMachine_Click(object sender, EventArgs e) {
-            Delegate.NativeMenuItemDestroyMachine((VagrantMachine)((ToolStripMenuItem)sender).Tag);
-        }
+        //public void DestroyMachine_Click(object sender, EventArgs e) {
+        //    Delegate.NativeMenuItemDestroyMachine((VagrantMachine)((ToolStripMenuItem)sender).Tag);
+        //}
 
-        public void ProvisionMachine_Click(object sender, EventArgs e) {
-            Delegate.NativeMenuItemProvisionMachine((VagrantMachine)((ToolStripMenuItem)sender).Tag);
-        }
+        //public void ProvisionMachine_Click(object sender, EventArgs e) {
+        //    Delegate.NativeMenuItemProvisionMachine((VagrantMachine)((ToolStripMenuItem)sender).Tag);
+        //}
     }
 }
